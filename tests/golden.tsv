@@ -1,0 +1,61 @@
+# keys	expected top candidate	expected preedit
+# Each symbol on each key, in the slot it can occupy.
+# 吧 嗎 啦 喔 的 lead here because a neutral tone also answers to tones 2-4;
+# that is the known cost of keeping 早上 and 太太 findable, below.
+bak	吧	ㄅㄚˋ
+pak	怕	ㄆㄚˋ
+mak	嗎	ㄇㄚˋ
+fa	發	ㄈㄚ
+dak	大	ㄉㄚˋ
+tak	踏	ㄊㄚˋ
+nak	那	ㄋㄚˋ
+lak	啦	ㄌㄚˋ
+gak	尬	ㄍㄚˋ
+kaj	卡	ㄎㄚˇ
+ha	哈	ㄏㄚ
+jia	家	ㄐㄧㄚ
+qia	掐	ㄑㄧㄚ
+xia	瞎	ㄒㄧㄚ
+rwk	入	ㄖㄨˋ
+wok	喔	ㄨㄛˋ
+qum	圈	ㄑㄩㄢ
+gwof	國	ㄍㄨㄛˊ
+xie	些	ㄒㄧㄝ
+def	的	ㄉㄜˊ
+led	了	ㄌㄜ˙
+wik	外	ㄨㄞˋ
+byk	被	ㄅㄟˋ
+gy	給	ㄍㄟ
+dvk	到	ㄉㄠˋ
+kpk	釦	ㄎㄡˋ
+tmf	談	ㄊㄢˊ
+twn	吞	ㄊㄨㄣ
+tt	湯	ㄊㄤ
+dl	燈	ㄉㄥ
+rf	而	rˊ
+# Tone 1 has no key, and a bare syllable means tone 1.
+sm	三	sㄢ
+dm	單	ㄉㄢ
+# z c s stand for both; the key is shown because the keys cannot say which.
+zmk	站	zㄢˋ
+zk	至	zˋ
+zumf	資源	zㄩㄢˊ
+ck	次	cˋ
+sk	是	sˋ
+# zh ch sh pick ㄓㄔㄕ.
+zhumf	支援	ㄓㄩㄢˊ
+zhmk	站	ㄓㄢˋ
+chf	持	ㄔˊ
+shm	山	ㄕㄢ
+shmk	善	ㄕㄢˋ
+# i is ㄧ or ㄞ; shown as i only where the keys cannot say which.
+bij	比	ㄅiˇ
+ik	愛	iˋ
+# A word stays findable under the tone a typist gives, against an exact word on the same keys.
+zvjstk	早上	zㄠˇsㄤˋ
+tiktik	太太	ㄊiˋㄊiˋ
+izwlj	一種	izㄨㄥˇ
+iqiek	一切	iㄑㄧㄝˋ
+# Words across syllables.
+dakjia	大家	ㄉㄚˋㄐㄧㄚ
+sffn	十分	sˊㄈㄣ
