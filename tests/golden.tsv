@@ -14,13 +14,13 @@ gak	尬	ㄍㄚˋ
 kaj	卡	ㄎㄚˇ
 ha	哈	ㄏㄚ
 jia	家	ㄐㄧㄚ
-qia	掐	ㄑㄧㄚ
-xia	瞎	ㄒㄧㄚ
+qia	卡	ㄑㄧㄚ
+xia	下	ㄒㄧㄚ
 rwk	入	ㄖㄨˋ
 wok	喔	ㄨㄛˋ
-qum	圈	ㄑㄩㄢ
+qum	全	ㄑㄩㄢ
 gwof	國	ㄍㄨㄛˊ
-xie	些	ㄒㄧㄝ
+xie	寫	ㄒㄧㄝ
 def	的	ㄉㄜˊ
 led	了	ㄌㄜ˙
 wik	外	ㄨㄞˋ
@@ -31,11 +31,13 @@ kpk	釦	ㄎㄡˋ
 tmf	談	ㄊㄢˊ
 twn	吞	ㄊㄨㄣ
 tt	湯	ㄊㄤ
-dl	燈	ㄉㄥ
+dl	等	ㄉㄥ
 rf	而	rˊ
-# Tone 1 has no key, and a bare syllable means tone 1.
+# Tone 1 has no key. Other tones can be left out, on syllables with and without a tone 1.
 sm	三	sㄢ
-dm	單	ㄉㄢ
+dm	但	ㄉㄢ
+rn	人	ㄖㄣ
+gwojia	國家	ㄍㄨㄛㄐㄧㄚ
 # z c s stand for both; the key is shown because the keys cannot say which.
 zmk	站	zㄢˋ
 zk	至	zˋ

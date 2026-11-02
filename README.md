@@ -15,9 +15,9 @@ z ㄗㄓ  x ㄒ    c ㄘㄔ  v ㄠ    b ㄅ    n ㄋㄣ  m ㄇㄢ
 - `i` holds ㄧ and ㄞ, which also share readings: 代理 and 地理 are on one code.
 - The preedit shows a symbol where the keys settle it, and the key itself where
   they cannot: `zmk` shows `zㄢˋ`, `zhmk` shows `ㄓㄢˋ`.
-- Type the tones. A bare syllable offers tone 1 alone wherever that syllable has
-  a tone 1: `dm` offers 單 and not 但. Only a syllable with no tone 1 matches its
-  other tones when bare: `rn` offers 人.
+- Tones can be left out. A bare syllable counts tone 1 at full weight and other
+  tones at half, so `gwojia` offers 國家, and `dm` offers 但 before 單 because 但 is
+  far more common.
 - A neutral tone also answers to tones 2-4, because the dictionary writes 早上 as
   `zao3 shang5` and a typist gives ㄕㄤˋ. The cost is that particles lead on those
   codes: `mak` offers 嗎 before 罵.

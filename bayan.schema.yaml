@@ -15,7 +15,7 @@ schema:
     注音 26 鍵排佈，聲母按拼音字母擺放。
     z=ㄗㄓ c=ㄘㄔ s=ㄙㄕ 同鍵，由候選區分；
     也可按拼音打 zh ch sh，直接指定 ㄓㄔㄕ。
-    空格送出，一聲不按鍵；其餘聲調要打。
+    空格送出，一聲不按鍵，聲調可省略。
   dependencies:
     - terra_pinyin
 
@@ -89,19 +89,19 @@ speller:
     - xform/er/R/
     - xform/eh/E/
     - xform/([iv])e/$1E/
-    # Tone 1 has no key: a bare syllable means tone 1.
+    # Tone 1 has no key: a bare syllable is an exact tone 1.
     - xform/1$//
-    # terra_pinyin writes some words with a neutral tone (早上 zao3 shang5) or
-    # with 一 in its sandhi tone (一切 yi2 qie4); a typist gives the character's
-    # own tone. These are fuzz, not abbrev: librime drops an abbreviation as soon
-    # as an exact path exists, and shared keys make exact paths common (找上).
+    # terra_pinyin writes some words with a neutral tone (早上 zao3 shang5), and
+    # a typist gives the character's own tone, so neutral answers to tones 2-4.
     - fuzz/5$/2/
     - fuzz/5$/3/
     - fuzz/5$/4/
-    - fuzz/^i[24]$/i/
-    # Abbreviations: initial only, or any other tone left out.
+    # Any tone can be left out. This is fuzz, not abbrev: librime drops an
+    # abbreviation as soon as an exact path exists, and a bare syllable is exact
+    # for tone 1, so with abbrev 國家 could not be typed as gwojia at all.
+    - fuzz/^([A-Za-z]+)\d$/$1/
+    # Initial only.
     - abbrev/^([bpmfdtnlgkhjqxZCSrzcs]).+$/$1/
-    - abbrev/^([A-Za-z]+)\d$/$1/
     # z c s also take a pinyin h, which picks ㄓㄔㄕ over ㄗㄘㄙ.
     - derive/^Z/Zh/
     - derive/^C/Ch/

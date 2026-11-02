@@ -2,21 +2,24 @@
 """Compare schemas on a real librime: frequent words and whole sentences.
 
   compare.py --drive D --shared DIR --tsi tsi.csv --sentences FILE \
-             SCHEMA=LAYOUT[@USERDIR] [...]
+             SCHEMA=LAYOUT@USERDIR [...]
+
+Each schema is typed twice, with every tone and with none, because a tone rule
+can help one habit and ruin the other.
 
 tsi.csv is libchewing-data's dict/chewing/tsi.csv. It supplies readings and
 frequencies, and is LGPL, so it is fetched rather than kept in this repository.
-Every schema must already be deployed in its user directory.
+Every schema must already be deployed in its user directory, and that directory
+must never receive a commit: librime learns from commits, which shifts the scores.
 """
 import argparse
-import collections
 import csv
 import os
 import subprocess
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from layouts import LAYOUTS, keys_for  # noqa: E402
+from layouts import LAYOUTS, TONE_MARKS, keys_for  # noqa: E402
 
 
 def load_lexicon(path):
@@ -71,6 +74,10 @@ def run(drive, shared, user, schema, lines):
     return [line.split("\t") for line in result.stdout.splitlines()]
 
 
+def without_tones(reading):
+    return "".join(c for c in reading if c not in TONE_MARKS)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--drive", required=True)
@@ -79,7 +86,6 @@ def main():
     parser.add_argument("--sentences", required=True)
     parser.add_argument("--words", type=int, default=3000)
     parser.add_argument("--chars", type=int, default=1000)
-    parser.add_argument("--misses", type=int, default=0)
     parser.add_argument("schemas", nargs="+", metavar="SCHEMA=LAYOUT@USERDIR")
     args = parser.parse_args()
 
@@ -98,54 +104,45 @@ def main():
     if unread:
         print("no reading for:", unread, file=sys.stderr)
     readable = [(s, r) for s, r in readable if r]
-    print(
-        f"{len(chars)} chars, {len(words)} words, {len(readable)} sentences "
-        f"({sum(len(s) for s, _ in readable)} characters)"
-    )
-    print(f"{'schema':20s} {'char top1':>10s} {'char <=9':>9s} {'word top1':>10s} {'word <=9':>9s} {'sentence top1':>14s}")
+    print(f"{len(chars)} chars, {len(words)} words, {len(readable)} sentences")
+    print(f"{'schema':20s} {'typing':10s} {'char top1':>10s} {'char <=9':>9s} {'word top1':>10s} {'word <=9':>9s} {'sentences':>10s}")
 
     for spec in args.schemas:
         schema, rest = spec.split("=")
         layout, user = rest.split("@")
         table = LAYOUTS[layout]
-        cells = []
-        misses = []
-        for group in (chars, words):
+        for habit, shape in (("tones", str), ("no tones", without_tones)):
+            cells = []
+            for group in (chars, words):
+                rows = run(
+                    args.drive,
+                    args.shared,
+                    user,
+                    schema,
+                    [f"q\t{keys_for(table, shape(e[1]))}\t{w}" for w, e in group],
+                )
+                assert len(rows) == len(group), (schema, len(rows), len(group))
+                total = sum(e[0] for _, e in group)
+                top = page = 0
+                for (_, entry), row in zip(group, rows):
+                    rank = int(row[2])
+                    if rank == 1:
+                        top += entry[0]
+                    if 1 <= rank <= 9:
+                        page += entry[0]
+                cells += [100 * top / total, 100 * page / total]
             rows = run(
                 args.drive,
                 args.shared,
                 user,
                 schema,
-                [f"q\t{keys_for(table, e[1])}\t{w}" for w, e in group],
+                [f"q\t{keys_for(table, shape(r))}\t{s}" for s, r in readable],
             )
-            assert len(rows) == len(group), (schema, len(rows), len(group))
-            total = sum(e[0] for _, e in group)
-            top = page = 0
-            for (word, entry), row in zip(group, rows):
-                rank = int(row[2])
-                if rank == 1:
-                    top += entry[0]
-                else:
-                    misses.append((entry[0], word, row[4], rank))
-                if 1 <= rank <= 9:
-                    page += entry[0]
-            cells += [100 * top / total, 100 * page / total]
-        rows = run(
-            args.drive,
-            args.shared,
-            user,
-            schema,
-            [f"q\t{keys_for(table, r)}\t{s}" for s, r in readable],
-        )
-        hits = sum(1 for row in rows if row[2] == "1")
-        print(
-            f"{schema:20s} {cells[0]:9.2f}% {cells[1]:8.2f}% {cells[2]:9.2f}% {cells[3]:8.2f}% "
-            f"{hits:5d}/{len(readable)}"
-        )
-        if args.misses:
-            misses.sort(reverse=True)
-            print("  worst misses:", " ".join(f"{w}→{t}(#{r})" for _, w, t, r in misses[: args.misses]))
-            print("  sentence misses:", " | ".join(f"{row[1]}→{row[4]}" for row in rows if row[2] != "1")[:1500])
+            hits = sum(1 for row in rows if row[2] == "1")
+            print(
+                f"{schema:20s} {habit:10s} {cells[0]:9.2f}% {cells[1]:8.2f}% {cells[2]:9.2f}% {cells[3]:8.2f}% "
+                f"{hits:6d}/{len(readable)}"
+            )
 
 
 if __name__ == "__main__":
