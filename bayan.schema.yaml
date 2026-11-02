@@ -1,0 +1,237 @@
+# Rime schema
+# encoding: utf-8
+#
+# Derived from Bopomofo_Eten26_Rime by Lou (MIT):
+# https://github.com/loustack17/Bopomofo_Eten26_Rime
+
+schema:
+  schema_id: bayan
+  name: 伯顏
+  version: "0.1.0"
+  author:
+    - Bayanasar Khurd
+    - "Lou <https://github.com/loustack17>"
+  description: |
+    注音 26 鍵排佈，聲母按拼音字母擺放。
+    z=ㄗㄓ c=ㄘㄔ s=ㄙㄕ 同鍵，由候選區分；
+    也可按拼音打 zh ch sh，直接指定 ㄓㄔㄕ。
+    空格送出，一聲不按鍵，聲調可省略。
+  dependencies:
+    - terra_pinyin
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: ["中", En]
+  - name: full_shape
+    reset: 0
+    states: ["半形", "全形"]
+  - options: [zh_hant_tw, zh_hans]
+    reset: 0
+    states: ["繁體", "簡體"]
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - script_translator
+  filters:
+    - simplifier@zh_hans
+    - simplifier@zh_hant_tw
+    - uniquifier
+
+menu:
+  alternative_select_keys: "1234567890"
+  page_size: 9
+
+speller:
+  alphabet: "abcdefghijklmnopqrstuvwxyz"
+  finals: "fjkd"
+  delimiter: "'"
+  algebra:
+    # terra_pinyin syllables to one internal letter per zhuyin symbol.
+    - xform/^m(\d)$/mu$1/
+    - xform/^r5$/er5/
+    - xform/iu/iou/
+    - xform/ui/uei/
+    - xform/ong/ung/
+    - xform/^yi?/i/
+    - xform/^wu?/u/
+    - xform/iu/v/
+    - xform/^([jqx])u/$1v/
+    - xform/([iuv])n/$1en/
+    - xform/^zhi?/Z/
+    - xform/^chi?/C/
+    - xform/^shi?/S/
+    - xform/^([zcsr])i/$1/
+    - xform/ai/A/
+    - xform/ei/I/
+    - xform/ao/O/
+    - xform/ou/U/
+    - xform/ang/K/
+    - xform/eng/G/
+    - xform/an/M/
+    - xform/en/N/
+    - xform/er/R/
+    - xform/eh/E/
+    - xform/([iv])e/$1E/
+    # Tone 1 has no key: a bare syllable means tone 1.
+    - xform/1$//
+    # terra_pinyin writes some words with a neutral tone (早上 zao3 shang5) or
+    # with 一 in its sandhi tone (一切 yi2 qie4); a typist gives the character's
+    # own tone. These are fuzz, not abbrev: librime drops an abbreviation as soon
+    # as an exact path exists, and shared keys make exact paths common (找上).
+    - fuzz/5$/2/
+    - fuzz/5$/3/
+    - fuzz/5$/4/
+    - fuzz/^i[24]$/i/
+    # Abbreviations: initial only, or any other tone left out.
+    - abbrev/^([bpmfdtnlgkhjqxZCSrzcs]).+$/$1/
+    - abbrev/^([A-Za-z]+)\d$/$1/
+    # z c s also take a pinyin h, which picks ㄓㄔㄕ over ㄗㄘㄙ.
+    - derive/^Z/Zh/
+    - derive/^C/Ch/
+    - derive/^S/Sh/
+    # Internal letters to keys:
+    #   ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ ㄧㄨㄩ ㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ ˊˇˋ˙
+    - xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2345|bpmfdtnlgkhjqxzcsrzcsiwuaoeeiyvpmntlrfjkd|
+
+editor:
+  bindings:
+    space: commit_composition
+    Return: confirm
+    KP_Enter: confirm
+
+translator:
+  dictionary: terra_pinyin
+  prism: bayan
+  spelling_hints: 0
+  comment_format: []
+  enable_sentence: true
+  enable_completion: true
+  enable_user_dict: true
+  enable_encoder: true
+  encode_commit_history: true
+  sentence_over_completion: true
+  # One key can stand for two symbols. Where the keys typed settle which, show
+  # the symbol; where they cannot (z c s, and i or r in some positions), show
+  # the key itself. Alternation, not [ㄐㄑㄒ]: Rime's regex matches UTF-8 bytes.
+  preedit_format:
+    # zh ch sh are settled; h after anything else is ㄏ.
+    - xform/(^|')zh/$1ㄓ/
+    - xform/(^|')ch/$1ㄔ/
+    - xform/(^|')sh/$1ㄕ/
+    # Keys with one reading.
+    - xform/b/ㄅ/
+    - xform/g/ㄍ/
+    - xform/h/ㄏ/
+    - xform/q/ㄑ/
+    - xform/x/ㄒ/
+    # A tone key at the start of a syllable is an initial.
+    - xform/(^|')f/$1ㄈ/
+    - xform/(^|')d/$1ㄉ/
+    - xform/(^|')j/$1ㄐ/
+    - xform/(^|')k/$1ㄎ/
+    # A shared key at the start of a syllable is an initial if more follows.
+    - xform/(^|')p([iwuaoeyvpmntlr])/$1ㄆ$2/
+    - xform/(^|')m([iwuaoeyvpmntlr])/$1ㄇ$2/
+    - xform/(^|')n([iwuaoeyvpmntlr])/$1ㄋ$2/
+    - xform/(^|')t([iwuaoeyvpmntlr])/$1ㄊ$2/
+    - xform/(^|')r([iwuaoeyvpmntlr])/$1ㄖ$2/
+    - xform/(^|')l/$1ㄌ/
+    # i: ㄧ before a final or after ㄐㄑㄒ; ㄞ where ㄧ cannot follow.
+    - xform/ii/ㄧㄞ/
+    - xform/i([aoeyvpmntlr])/ㄧ$1/
+    - xform/(ㄐ|ㄑ|ㄒ)i/$1ㄧ/
+    - xform/(ㄍ|ㄎ|ㄏ|ㄓ|ㄔ|ㄕ|z|c|s|w)i/$1ㄞ/
+    # e: ㄝ after ㄧㄩ, else ㄜ.
+    - xform/u/ㄩ/
+    - xform/ㄧe/ㄧㄝ/
+    - xform/ㄩe/ㄩㄝ/
+    - xform/e/ㄜ/
+    - xform/w/ㄨ/
+    - xform/a/ㄚ/
+    - xform/o/ㄛ/
+    - xform/v/ㄠ/
+    - xform/y/ㄟ/
+    # Whatever is left of the shared keys sits in final position.
+    - xform/p/ㄡ/
+    - xform/m/ㄢ/
+    - xform/n/ㄣ/
+    - xform/t/ㄤ/
+    - xform/l/ㄥ/
+    - xform/([^'])r/$1ㄦ/
+    - xform/f/ˊ/
+    - xform/j/ˇ/
+    - xform/k/ˋ/
+    - xform/d/˙/
+    - xform/'//
+
+punctuator:
+  full_shape: &zh_punct
+    "/": {commit: "、"}
+    ",": {commit: "，"}
+    .: {commit: "。"}
+    ";": {commit: "；"}
+    ":": {commit: "："}
+    "?": {commit: "？"}
+    "!": {commit: "！"}
+    "\"": {pair: ["“", "”"]}
+    "'": {pair: ["‘", "’"]}
+    "(": {commit: "（"}
+    ")": {commit: "）"}
+    "[": {commit: "［"}
+    "]": {commit: "］"}
+    "{": {commit: "｛"}
+    "}": {commit: "｝"}
+    "<": {commit: "《"}
+    ">": {commit: "》"}
+    "@": {commit: "＠"}
+    "#": {commit: "＃"}
+    "$": {commit: "＄"}
+    "%": {commit: "％"}
+    "^": {commit: "＾"}
+    "&": {commit: "＆"}
+    "*": {commit: "＊"}
+    "-": {commit: "－"}
+    _: {commit: "＿"}
+    "+": {commit: "＋"}
+    "=": {commit: "＝"}
+    "\\": {commit: "＼"}
+    "|": {commit: "｜"}
+    "`": {commit: "｀"}
+    "~": {commit: "～"}
+  half_shape: *zh_punct
+
+key_binder:
+  import_preset: default
+
+recognizer:
+  patterns:
+    email: "^[a-z][-_.0-9a-z]*@.*$"
+    uppercase: "^[A-Z][-_+.'0-9A-Za-z]*$"
+    url: "^(www[.]|https?:|ftp:|mailto:).*$"
+
+zh_hans:
+  option_name: zh_hans
+  opencc_config: t2s.json
+  tips: all
+
+zh_hant_tw:
+  option_name: zh_hant_tw
+  opencc_config: t2tw.json
+  tips: none
