@@ -32,32 +32,26 @@ tmf	談	ㄊㄢˊ
 twn	吞	ㄊㄨㄣ
 tt	湯	ㄊㄤ
 dl	等	ㄉㄥ
-rf	而	rˊ
+rf	而	ㄖˊ
 # Tone 1 has no key. Other tones can be left out, on syllables with and without a tone 1.
-sm	三	sㄢ
+sm	三	ㄕㄢ
 dm	但	ㄉㄢ
 rn	人	ㄖㄣ
 gwojia	國家	ㄍㄨㄛㄐㄧㄚ
-# z c s stand for both; the key is shown because the keys cannot say which.
-zmk	站	zㄢˋ
-zk	至	zˋ
-zumf	資源	zㄩㄢˊ
-ck	次	cˋ
-sk	是	sˋ
-# zh ch sh pick ㄓㄔㄕ.
-zhumf	支援	ㄓㄩㄢˊ
-zhmk	站	ㄓㄢˋ
-chf	持	ㄔˊ
-shm	山	ㄕㄢ
-shmk	善	ㄕㄢˋ
-# i is ㄧ or ㄞ; shown as i only where the keys cannot say which.
-bij	比	ㄅiˇ
-ik	愛	iˋ
+# z c s stand for both and show the commoner, ㄓㄔㄕ, whichever candidate leads.
+zmk	站	ㄓㄢˋ
+zk	至	ㄓˋ
+zumf	資源	ㄓㄩㄢˊ
+ck	次	ㄔˋ
+sk	是	ㄕˋ
+# i shows ㄧ unless only ㄞ can follow the initial.
+bij	比	ㄅㄧˇ
+ik	愛	ㄧˋ
 # A word stays findable under the tone a typist gives, against an exact word on the same keys.
-zvjstk	早上	zㄠˇsㄤˋ
-tiktik	太太	ㄊiˋㄊiˋ
-izwlj	一種	izㄨㄥˇ
-iqiek	一切	iㄑㄧㄝˋ
+zvjstk	早上	ㄓㄠˇㄕㄤˋ
+tiktik	太太	ㄊㄧˋㄊㄧˋ
+izwlj	一種	ㄧㄓㄨㄥˇ
+iqiek	一切	ㄧㄑㄧㄝˋ
 # Words across syllables.
 dakjia	大家	ㄉㄚˋㄐㄧㄚ
-sffn	十分	sˊㄈㄣ
+sffn	十分	ㄕˊㄈㄣ

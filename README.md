@@ -11,10 +11,10 @@ z ㄗㄓ  x ㄒ    c ㄘㄔ  v ㄠ    b ㄅ    n ㄋㄣ  m ㄇㄢ
 
 - Space commits. Tone 1 has no key, and a bare syllable means tone 1.
 - `z` `c` `s` stand for both members of a pair and the candidates tell them
-  apart. Typing `zh` `ch` `sh`, as in pinyin, picks ㄓㄔㄕ.
+  apart.
 - `i` holds ㄧ and ㄞ, which also share readings: 代理 and 地理 are on one code.
-- The preedit shows a symbol where the keys settle it, and the key itself where
-  they cannot: `zmk` shows `zㄢˋ`, `zhmk` shows `ㄓㄢˋ`.
+- The preedit is always zhuyin. Where the keys cannot settle a symbol it shows
+  the commoner of the two, whichever candidate is highlighted: `zmk` shows ㄓㄢˋ.
 - Tones can be left out. A bare syllable counts tone 1 at full weight and other
   tones at half, so `gwojia` offers 國家, and `dm` offers 但 before 單 because 但 is
   far more common.

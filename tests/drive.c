@@ -6,6 +6,7 @@
 //   q<TAB>keys<TAB>expected   rank of expected among candidates, plus preedit and top candidate
 //   c<TAB>keys                type keys, press space, report whether it was accepted and the commit
 //   s<TAB>keys<TAB>option     as c, with the named option switched on and then off again
+//   p<TAB>keys                the preedit alone
 //
 // A rank of 0 means expected was not among the first MAX_CANDIDATES candidates.
 #include <stdio.h>
@@ -56,6 +57,17 @@ static void query(RimeApi* rime, RimeSessionId session, const char* keys, const 
     rime->candidate_list_end(&it);
   }
   printf("%s\t%s\t%d\t%s\t%s\n", keys, expected, rank, preedit, top);
+  rime->free_context(&ctx);
+  rime->clear_composition(session);
+}
+
+static void preedit_only(RimeApi* rime, RimeSessionId session, const char* keys) {
+  type_keys(rime, session, keys);
+  RIME_STRUCT(RimeContext, ctx);
+  const char* preedit = "";
+  if (rime->get_context(session, &ctx) && ctx.composition.preedit)
+    preedit = ctx.composition.preedit;
+  printf("%s\t%s\n", keys, preedit);
   rime->free_context(&ctx);
   rime->clear_composition(session);
 }
@@ -112,6 +124,8 @@ int main(int argc, char** argv) {
     const char* arg = field(&cursor);
     if (strcmp(verb, "q") == 0) {
       query(rime, session, keys, arg);
+    } else if (strcmp(verb, "p") == 0) {
+      preedit_only(rime, session, keys);
     } else if (strcmp(verb, "c") == 0) {
       commit(rime, session, keys);
     } else if (strcmp(verb, "s") == 0) {

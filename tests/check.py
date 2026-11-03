@@ -7,7 +7,9 @@ Use a fresh user directory. The space checks commit text, which librime learns,
 so this must not share a user dictionary with a measurement.
 """
 import argparse
+import itertools
 import os
+import string
 import subprocess
 import sys
 
@@ -52,6 +54,22 @@ def main():
             failures += 1
             print(f"FAIL {keys}: want {top} {preedit}, got {got_top} {got_preedit}")
 
+    # The preedit is zhuyin and nothing else, for every string of up to 3 keys.
+    letters = string.ascii_lowercase
+    typed = [
+        "".join(keys)
+        for size in (1, 2, 3)
+        for keys in itertools.product(letters, repeat=size)
+    ]
+    latin = [
+        row
+        for row in drive(args, [f"p\t{keys}" for keys in typed])
+        if len(row) < 2 or not row[1] or any(c in string.ascii_letters for c in row[1])
+    ]
+    if latin:
+        failures += 1
+        print(f"FAIL {len(latin)} of {len(typed)} key strings leave Latin or nothing in the preedit, such as", latin[:12])
+
     space = drive(args, ["c\t\t", "c\tdak\t", "c\tdakjia\t"])
     want = [("accepted=0", ""), ("accepted=1", "大"), ("accepted=1", "大家")]
     for (keys, accepted, text), (want_accepted, want_text) in zip(space, want):
@@ -59,7 +77,7 @@ def main():
             failures += 1
             print(f"FAIL space after {keys!r}: want {want_accepted} {want_text!r}, got {accepted} {text!r}")
 
-    print(f"{len(golden)} golden, {len(want)} space, {failures} failed")
+    print(f"{len(golden)} golden, {len(typed)} preedits, {len(want)} space, {failures} failed")
     return 1 if failures else 0
 
 
