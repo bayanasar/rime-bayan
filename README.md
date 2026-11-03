@@ -1,7 +1,18 @@
 # bayan 伯顏
 
-A 26-key zhuyin (bopomofo) layout for [Rime](https://rime.im), with the initials
-on the letters they have in pinyin.
+A 26-key zhuyin (bopomofo) layout for [Rime](https://rime.im) that places its
+keys by pinyin.
+
+Display, spelling and tones are all zhuyin. Pinyin and the ET26 (倚天 26) layout
+only decide which key a symbol sits on:
+
+1. A symbol whose pinyin is one letter sits on that letter: ㄅ b, ㄆ p, ㄇ m, ㄈ f,
+   ㄉ d, ㄊ t, ㄋ n, ㄌ l, ㄍ g, ㄎ k, ㄏ h, ㄐ j, ㄑ q, ㄒ x, ㄖ r, ㄗ z, ㄘ c, ㄙ s,
+   ㄧ i, ㄨ u, ㄩ v, ㄚ a, ㄛ o, ㄜ e, ㄝ e.
+2. A symbol whose pinyin is several letters follows ET26: ㄞ i, ㄡ p, ㄢ m, ㄣ n,
+   ㄤ t, ㄥ l. So do the tones: ˊ f, ˇ j, ˋ k, ˙ d.
+3. The exceptions: ㄠ is on w, a special case. ㄓ ㄔ ㄕ share z c s with ㄗ ㄘ ㄙ,
+   ㄦ shares r with ㄖ, and ㄟ is on y.
 
 ```
 q ㄑ    w ㄠ    e ㄝㄜ  r ㄖㄦ  t ㄊㄤ  y ㄟ    u ㄨ    i ㄧㄞ  o ㄛ    p ㄆㄡ
