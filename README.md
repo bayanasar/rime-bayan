@@ -4,9 +4,9 @@ A 26-key zhuyin (bopomofo) layout for [Rime](https://rime.im), with the initials
 on the letters they have in pinyin.
 
 ```
-q ㄑ    w ㄨ    e ㄝㄜ  r ㄖㄦ  t ㄊㄤ  y ㄟ    u ㄩ    i ㄧㄞ  o ㄛ    p ㄆㄡ
+q ㄑ    w ㄠ    e ㄝㄜ  r ㄖㄦ  t ㄊㄤ  y ㄟ    u ㄨ    i ㄧㄞ  o ㄛ    p ㄆㄡ
 a ㄚ    s ㄙㄕ  d ㄉ˙   f ㄈˊ   g ㄍ    h ㄏ    j ㄐˇ   k ㄎˋ   l ㄌㄥ
-z ㄗㄓ  x ㄒ    c ㄘㄔ  v ㄠ    b ㄅ    n ㄋㄣ  m ㄇㄢ
+z ㄗㄓ  x ㄒ    c ㄘㄔ  v ㄩ    b ㄅ    n ㄋㄣ  m ㄇㄢ
 ```
 
 - Space commits. Tone 1 has no key, and a bare syllable means tone 1.
@@ -16,7 +16,7 @@ z ㄗㄓ  x ㄒ    c ㄘㄔ  v ㄠ    b ㄅ    n ㄋㄣ  m ㄇㄢ
 - The preedit is always zhuyin. Where the keys cannot settle a symbol it shows
   the commoner of the two, whichever candidate is highlighted: `zmk` shows ㄓㄢˋ.
 - Tones can be left out. A bare syllable counts tone 1 at full weight and other
-  tones at half, so `gwojia` offers 國家, and `dm` offers 但 before 單 because 但 is
+  tones at half, so `guojia` offers 國家, and `dm` offers 但 before 單 because 但 is
   far more common.
 - A neutral tone also answers to tones 2-4, because the dictionary writes 早上 as
   `zao3 shang5` and a typist gives ㄕㄤˋ. The cost is that particles lead on those

@@ -19,7 +19,7 @@ def _table(initials, medials, finals):
 
 LAYOUTS = {
     "eten26": _table("bpmfdtnlvkhgvcgycjqws", "exu", "aorwiqzpmntlh"),
-    "bayan": _table("bpmfdtnlgkhjqxzcsrzcs", "iwu", "aoeeiyvpmntlr"),
+    "bayan": _table("bpmfdtnlgkhjqxzcsrzcs", "iuv", "aoeeiywpmntlr"),
 }
 
 

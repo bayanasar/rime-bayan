@@ -97,7 +97,7 @@ speller:
     - fuzz/5$/4/
     # Any tone can be left out. This is fuzz, not abbrev: librime drops an
     # abbreviation as soon as an exact path exists, and a bare syllable is exact
-    # for tone 1, so with abbrev 國家 could not be typed as gwojia at all.
+    # for tone 1, so with abbrev 國家 could not be typed as guojia at all.
     - fuzz/^([A-Za-z]+)\d$/$1/
     # Spellings with no single-syllable entry, such as yi5 and ban2. Left in, they
     # count as exact, so librime drops the path reading the tone key as the next
@@ -108,7 +108,7 @@ speller:
     - abbrev/^([bpmfdtnlgkhjqxZCSrzcs]).+$/$1/
     # Internal letters to keys:
     #   ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ ㄧㄨㄩ ㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ ˊˇˋ˙
-    - xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2345|bpmfdtnlgkhjqxzcsrzcsiwuaoeeiyvpmntlrfjkd|
+    - xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2345|bpmfdtnlgkhjqxzcsrzcsiuvaoeeiywpmntlrfjkd|
 
 editor:
   bindings:
@@ -155,19 +155,19 @@ translator:
     - xform/(^|')l/$1ㄌ/
     # i: ㄧ before a final or after ㄐㄑㄒ; ㄞ where ㄧ cannot follow.
     - xform/ii/ㄧㄞ/
-    - xform/i([aoeyvpmntlr])/ㄧ$1/
+    - xform/i([aoeywpmntlr])/ㄧ$1/
     - xform/(ㄐ|ㄑ|ㄒ)i/$1ㄧ/
-    - xform/(ㄍ|ㄎ|ㄏ|ㄓ|ㄔ|ㄕ|w)i/$1ㄞ/
+    - xform/(ㄍ|ㄎ|ㄏ|ㄓ|ㄔ|ㄕ|u)i/$1ㄞ/
     - xform/i/ㄧ/
     # e: ㄝ after ㄧㄩ, else ㄜ.
-    - xform/u/ㄩ/
+    - xform/v/ㄩ/
     - xform/ㄧe/ㄧㄝ/
     - xform/ㄩe/ㄩㄝ/
     - xform/e/ㄜ/
-    - xform/w/ㄨ/
+    - xform/u/ㄨ/
     - xform/a/ㄚ/
     - xform/o/ㄛ/
-    - xform/v/ㄠ/
+    - xform/w/ㄠ/
     - xform/y/ㄟ/
     # Whatever is left of the shared keys sits in final position.
     - xform/p/ㄡ/
